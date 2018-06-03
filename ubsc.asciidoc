@@ -1,0 +1,29 @@
+= Understanding Bitcoin Source Code
+Kosta Zertsekel <zertsekel@gmail.com>
+v0.1, 3.6.2018: First draft
+
+
+
+== Bitcoin Keys
+
+In Bitcoin Core a private key is essentially `std::vector` of bytes.
+Or, to be more exact `std::vector<unsigned char>`.
+
+[source,cpp,title='Bitcoin Core: file key.h (bitcoin/src/)']
+```
+typedef std::vector<unsigned char> CPrivKey;
+```
+
+[source,cpp,title='Libbitcoin: data.hpp (include/bitcoin/bitcoin/utility/)']
+```
+// Define a byte array of a specified length.
+template <size_t Size>
+using byte_array = std::array<uint8_t, Size>;
+```
+
+[source,cpp,title='Libbitcoin: file elliptic_curve.hpp (libbitcoin/include/bitcoin/bitcoin/math/)']
+```
+static constexpr size_t ec_secret_size = 32;
+typedef byte_array<ec_secret_size> ec_secret;
+```
+
